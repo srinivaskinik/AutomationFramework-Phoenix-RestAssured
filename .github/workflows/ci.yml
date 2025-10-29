@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ "master" ]
   schedule: #set the cron for mid night ist --UTC
-    - cron: "30 18 * * *"
+    - cron: "30 19 * * *"
   workflow_dispatch: 
     inputs: 
       env:
