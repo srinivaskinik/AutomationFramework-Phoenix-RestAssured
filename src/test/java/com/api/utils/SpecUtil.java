@@ -12,7 +12,7 @@ import static com.api.utils.ConfigManager.*;
 import org.hamcrest.Matchers;
 
 import com.api.constant.Role;
-import com.api.pojo.UserCredentials;
+import com.api.request.model.UserCredentials;
 
 public class SpecUtil {
 	//GET --DEL
