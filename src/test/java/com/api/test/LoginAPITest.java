@@ -1,34 +1,36 @@
 package com.api.test;
 
-import static io.restassured.RestAssured.*;
-
-import static org.hamcrest.Matchers.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.api.request.model.UserCredentials;
-import com.api.utils.SpecUtil;
+import static com.api.utils.SpecUtil.*;
 
-import static com.api.utils.ConfigManager.*;
-
-import io.restassured.http.ContentType;
-import io.restassured.module.jsv.JsonSchemaValidator;
+import static io.restassured.module.jsv.JsonSchemaValidator.*;
 
 public class LoginAPITest {
-	@Test
+	private UserCredentials userCredentials;
+	@BeforeMethod(description = "Create the payload for login API")
+	public void setup() {
+	 userCredentials = new UserCredentials("iamfd", "password");
+	}
+	@Test(description = "Verifying if the login api is working for user FD user",groups = {"api","regression","smoke"})
 	public void loginAPITest() throws IOException {
-		UserCredentials userCredentials = new UserCredentials("iamfd", "password");
+		
 		given()
-			.spec(SpecUtil.requestSpec(userCredentials))
+			.spec(requestSpec(userCredentials))
 		.when()
 			.post("login")
 		.then()
-			.spec(SpecUtil.responseSpec_OK())
+			.spec(responseSpec_OK())
 		.and()
 			.body("message",equalTo("Success"))
 		.and()
-			.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("response-schema/LoginResponseSchema.json"));
+			.body(matchesJsonSchemaInClasspath("response-schema/LoginResponseSchema.json"));
 	}
 }
