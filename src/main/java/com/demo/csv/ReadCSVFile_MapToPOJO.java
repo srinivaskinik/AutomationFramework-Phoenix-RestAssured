@@ -22,12 +22,12 @@ public class ReadCSVFile_MapToPOJO {
 		CSVReader csvReader = new CSVReader(isr);
 		
 		//Write the code to Map the csv to POJO
-		CsvToBean<UserPOJO> csvToBean= new CsvToBeanBuilder(csvReader)
-				.withType(UserPOJO.class)
+		CsvToBean<UserBean> csvToBean= new CsvToBeanBuilder(csvReader)
+				.withType(UserBean.class)
 				.withIgnoreEmptyLine(true)
 				.build();
 		
-		List<UserPOJO> userList=csvToBean.parse();
+		List<UserBean> userList=csvToBean.parse();
 		//System.out.println(userList.get(0).getUsername());
 		System.out.println(userList);
 		
