@@ -1,4 +1,4 @@
-package com.api.test;
+package com.api.tests.datadriven;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -9,21 +9,22 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.api.request.model.UserCredentials;
+import com.dataproviders.api.bean.UserBean;
+
 import static com.api.utils.SpecUtil.*;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 
-public class LoginAPITest {
-	private UserCredentials userCredentials;
-	@BeforeMethod(description = "Create the payload for login API")
-	public void setup() {
-	 userCredentials = new UserCredentials("iamfd", "password");
-	}
-	@Test(description = "Verifying if the login api is working for user FD user",groups = {"api","regression","smoke"})
-	public void loginAPITest() throws IOException {
+public class LoginAPIDataDrivenTest {
+
+	@Test(description = "Verifying if the login api is working for user FD user",
+			groups = {"api","regression","datadriven"},
+			dataProviderClass = com.dataproviders.DataProviderUtils.class,
+			dataProvider = "LoginAPIDataProvider")
+	public void loginAPITest(UserBean userbean)  {
 		
 		given()
-			.spec(requestSpec(userCredentials))
+			.spec(requestSpec(userbean))
 		.when()
 			.post("login")
 		.then()
