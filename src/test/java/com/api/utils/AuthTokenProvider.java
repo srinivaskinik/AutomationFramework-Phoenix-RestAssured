@@ -1,12 +1,11 @@
 package com.api.utils;
 
-import static io.restassured.RestAssured.*;
-
-import java.util.regex.Matcher;
-
-import static org.hamcrest.Matchers.*;
-
-import static com.api.constant.Role.*;
+import static com.api.constant.Role.ENG;
+import static com.api.constant.Role.FD;
+import static com.api.constant.Role.QC;
+import static com.api.constant.Role.SUP;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 import com.api.constant.Role;
 import com.api.request.model.UserCredentials;
