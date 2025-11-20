@@ -1,5 +1,5 @@
 package com.api.request.model;
-//temp
+//Srinivas K
 public record UserCredentials(
 	 String username,
 	 String password
