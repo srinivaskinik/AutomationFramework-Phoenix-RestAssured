@@ -13,7 +13,7 @@ import com.api.request.model.Problems;
 import com.github.javafaker.Faker;
 
 public class FakerDemo2 {
-	private final static String country = "India";
+	private final static String COUNTRY = "India";
 	public static void main(String[] args) {
 		//Create Fake CreateJobAPI request payload
 		//I want to create fake customer object
@@ -34,7 +34,7 @@ public class FakerDemo2 {
 		String area = faker.address().streetName();
 		String pincode = faker.numerify("#####");
 		String state = faker.address().state();
-		CustomerAddress customerAddress =new CustomerAddress(flatNumber, apartmentName, streetName, landmark, area, pincode, country, state);
+		CustomerAddress customerAddress =new CustomerAddress(flatNumber, apartmentName, streetName, landmark, area, pincode, COUNTRY, state);
 		System.out.println(customerAddress);
 		
 		//CustomerProduct fake object creation
