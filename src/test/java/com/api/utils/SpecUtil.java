@@ -1,18 +1,17 @@
 package com.api.utils;
 
+import static com.api.utils.ConfigManager.getProperty;
+
+import org.hamcrest.Matchers;
+
+import com.api.constant.Role;
+
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-
-import static com.api.utils.ConfigManager.*;
-
-import org.hamcrest.Matchers;
-
-import com.api.constant.Role;
-import com.api.request.model.UserCredentials;
 
 public class SpecUtil {
 	//GET --DEL

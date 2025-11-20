@@ -1,4 +1,4 @@
-package com.api.test;
+package com.api.tests;
 
 import static com.api.constant.Role.FD;
 import static io.restassured.RestAssured.given;
