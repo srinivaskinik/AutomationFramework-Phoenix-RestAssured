@@ -8,18 +8,18 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.testng.annotations.Test;
 
-import com.dataproviders.api.bean.UserBean;
+import com.api.request.model.UserCredentials;
 
-public class LoginAPIDataDrivenTest {
+public class LoginAPIExcelDataDrivenTest {
 
 	@Test(description = "Verifying if the login api is working for user FD user",
 			groups = {"api","regression","datadriven"},
 			dataProviderClass = com.dataproviders.DataProviderUtils.class,
 			dataProvider = "LoginAPIExcelDataProvider")
-	public void loginAPITest(UserBean userbean)  {
+	public void loginAPITest(UserCredentials userCredentials)  {
 		
 		given()
-			.spec(requestSpec(userbean))
+			.spec(requestSpec(userCredentials))
 		.when()
 			.post("login")
 		.then()
