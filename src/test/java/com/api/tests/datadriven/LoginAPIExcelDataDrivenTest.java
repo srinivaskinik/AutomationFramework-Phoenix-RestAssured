@@ -10,16 +10,16 @@ import org.testng.annotations.Test;
 
 import com.dataproviders.api.bean.UserBean;
 
-public class LoginAPIDataDrivenTest {
+public class LoginAPIExcelDataDrivenTest {
 
 	@Test(description = "Verifying if the login api is working for user FD user",
 			groups = {"api","regression","datadriven"},
 			dataProviderClass = com.dataproviders.DataProviderUtils.class,
 			dataProvider = "LoginAPIExcelDataProvider")
-	public void loginAPITest(UserBean userbean)  {
+	public void loginAPITest(UserBean userBean)  {
 		
 		given()
-			.spec(requestSpec(userbean))
+			.spec(requestSpec(userBean))
 		.when()
 			.post("login")
 		.then()
