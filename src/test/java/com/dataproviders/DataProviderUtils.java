@@ -59,7 +59,23 @@ public class DataProviderUtils {
 	
 	@DataProvider(name="LoginAPIExcelDataProvider", parallel=true)
 	public static Iterator<UserBean> LoginAPIExcelDataProvider() {
-		return ExcelReaderUtil2.loadTestData("LoginTestData",UserBean.class);
+		return ExcelReaderUtil2.loadTestData("testData/PhoenixTestData.xlsx","LoginTestData",UserBean.class);
 	}
+	
+	@DataProvider(name="createJobAPIExcelDataProvider", parallel=true)
+	public static Iterator<CreateJobPayload> createJobAPIExcelDataProvider() {
+		Iterator<CreateJobBean> createJobBeanIterator = ExcelReaderUtil2.loadTestData("testData/PhoenixTestData.xlsx", "CreateJobTestData",CreateJobBean.class);
+		List<CreateJobPayload> payloadList=new ArrayList<CreateJobPayload>();
+		CreateJobBean tempBean;
+		CreateJobPayload tempPayload;
+		while(createJobBeanIterator.hasNext()) {
+			tempBean=createJobBeanIterator.next();
+			tempPayload= CreateJobBeanMapper.mapper(tempBean);
+			payloadList.add(tempPayload);
+		}
+		
+		return payloadList.iterator();
+	}
+
 
 }
