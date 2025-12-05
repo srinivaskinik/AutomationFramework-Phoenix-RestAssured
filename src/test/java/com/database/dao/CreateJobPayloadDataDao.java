@@ -54,6 +54,9 @@ public class CreateJobPayloadDataDao {
 			on tr_job_head.id =map_job_problem.tr_job_head_id
 			LIMIT 5;
 					""";
+	private CreateJobPayloadDataDao() {
+		
+	}
 	
 	public static List<CreateJobBean> getCreateJobPayLoadData() {
 		// I need the connection -- DatabaseManager
