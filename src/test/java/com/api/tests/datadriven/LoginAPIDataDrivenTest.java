@@ -6,11 +6,18 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.api.services.AuthService;
 import com.dataproviders.api.bean.UserBean;
 
 public class LoginAPIDataDrivenTest {
+	private AuthService authService;
+	@BeforeMethod(description="Initializing the Auth Service")
+	public void setup() {
+		authService = new AuthService();
+	}
 
 	@Test(description = "Verifying if the login api is working for user FD user",
 			groups = {"api","regression","datadriven"},
@@ -18,10 +25,7 @@ public class LoginAPIDataDrivenTest {
 			dataProvider = "LoginAPIExcelDataProvider")
 	public void loginAPITest(UserBean userbean)  {
 		
-		given()
-			.spec(requestSpec(userbean))
-		.when()
-			.post("login")
+		authService.login(userbean)
 		.then()
 			.spec(responseSpec_OK())
 		.and()

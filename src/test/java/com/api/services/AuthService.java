@@ -9,12 +9,12 @@ import io.restassured.response.Response;
 
 public class AuthService {
 //Service class is going to hold the APIs that belong to the Auth
-	private static final String LOGIN_ENDPOINT="login";
-	public Response login(UserCredentials userCredentials) {
+	private static final String LOGIN_ENDPOINT="/login";
+	public Response login(Object userCredentials) {
 		Response response=given()
 		.spec(requestSpec(userCredentials))
 	.when()
-		.post();
+		.post(LOGIN_ENDPOINT);
 	
 		return response;
 	}
