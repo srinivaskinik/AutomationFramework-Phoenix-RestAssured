@@ -29,6 +29,7 @@ import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
 import com.api.request.model.Problems;
 import com.api.response.model.CreateJobResponseModel;
+import com.api.services.JobService;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
@@ -47,16 +48,17 @@ public class CreateJobAPIWithDBValidationWithResponseModelTest {
 	private Customer customer;
 	private CustomerAddress customerAddress;
 	private CustomerProduct customerProduct;
-	@BeforeMethod(description = "Creating createjob api request payload")
+	private JobService jobService;
+	@BeforeMethod(description = "Creating createjob api request payload and instantiating the jobService")
 	public void setup() {
 		customer=new Customer("Srinvas","K","9811122334","","test@gmail.com","");
 		customerAddress = new CustomerAddress("010", "Apt111", "Homadevanahalli", "Near Podar", "Bangalore", "560083", "Karnataka", "India");
-		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "13235812527815","13235812527815", "13235812527815", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
+		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "13235812527875","13235812527875", "13235812527875", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "Battery Issue");
 		List<Problems> problemsList=new ArrayList<Problems>();
 		problemsList.add(problems);
 		createJobPayload = new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer, customerAddress, customerProduct, problemsList);
-		
+		jobService=new JobService();
 	}
 	
 	
@@ -64,12 +66,7 @@ public class CreateJobAPIWithDBValidationWithResponseModelTest {
 	public void createJobAPITest()  {
 		//Creating the CreateJobPayload object
 	
-		CreateJobResponseModel createJobResponseModel=given()
-		.spec(requestSpecWithAuth(Role.FD, createJobPayload))
-		.body(createJobPayload)
-		.log().all()
-		.when()
-		.post("/job/create")
+		CreateJobResponseModel createJobResponseModel=jobService.createJob(Role.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))

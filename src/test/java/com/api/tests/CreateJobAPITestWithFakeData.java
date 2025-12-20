@@ -16,6 +16,7 @@ import com.api.request.model.CreateJobPayload;
 import com.api.request.model.Customer;
 import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
+import com.api.services.JobService;
 import com.api.utils.FakerDataGenerator;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
@@ -30,9 +31,11 @@ import io.restassured.response.Response;
 
 public class CreateJobAPITestWithFakeData {
 	CreateJobPayload createJobPayload;
-	@BeforeMethod(description = "Creating createjob api request payload")
+	private JobService jobService;
+	@BeforeMethod(description = "Creating createjob api request payload and instantiating the job service")
 	public void setup() {
 		createJobPayload=FakerDataGenerator.generateFakeCreateJobData();
+		jobService=new JobService();
 	}
 	
 	
@@ -40,12 +43,7 @@ public class CreateJobAPITestWithFakeData {
 	public void createJobAPITest() {
 		//Creating the CreateJobPayload object
 	
-		Response response=given()
-		.spec(requestSpecWithAuth(Role.FD, createJobPayload))
-		.body(createJobPayload)
-		.log().all()
-		.when()
-		.post("/job/create")
+		Response response=jobService.createJob(Role.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
