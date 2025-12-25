@@ -8,20 +8,27 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.notNullValue;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.api.services.DashboardService;
+import com.api.services.MasterService;
 
 import static com.api.utils.SpecUtil.*;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 
 public class MasterAPITest {
+	
+	private MasterService masterService;
+	@BeforeMethod(description = "Setting up the MasterService instance")
+	public void setup() {
+		masterService = new MasterService();
+	}
 
 	@Test(description = "Verify if the master API is giving correct response",groups = {"api","smoke","regression"})
 	public void masterAPITest() {
-		given()
-		.spec(requestSpecWithAuth(FD))
-		.when()
-		.post("master") //default content-type application/url-formencoded
+		masterService.master(FD)
 		.then()
 		.spec(responseSpec_OK())
 		.body("message",equalTo("Success"))
@@ -39,13 +46,7 @@ public class MasterAPITest {
 	
 	@Test(description = "Verify if the master API is giving correct status code for invalid token",groups = {"api","negative","smoke","regression"})
 	public void invalidTokenMasterAPITest() {
-		given()
-		.spec(requestSpec())
-		.and()
-		.contentType("")
-		.log().all()
-		.when()
-		.post("master") //default content-type application/url-formencoded
+		masterService.master()
 		.then()
 		.spec(responseSpec_TEXT(401));
 	}

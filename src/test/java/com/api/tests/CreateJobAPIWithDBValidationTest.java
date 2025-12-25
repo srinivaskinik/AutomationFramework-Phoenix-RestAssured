@@ -28,6 +28,7 @@ import com.api.request.model.Customer;
 import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
 import com.api.request.model.Problems;
+import com.api.services.JobService;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
@@ -46,16 +47,17 @@ public class CreateJobAPIWithDBValidationTest {
 	private Customer customer;
 	private CustomerAddress customerAddress;
 	private CustomerProduct customerProduct;
-	@BeforeMethod(description = "Creating createjob api request payload")
+	private JobService jobService;
+	@BeforeMethod(description = "Creating createjob api request payload and instantiating JobService")
 	public void setup() {
 		customer=new Customer("Srinvas","K","9811122334","","test@gmail.com","");
 		customerAddress = new CustomerAddress("010", "Apt111", "Homadevanahalli", "Near Podar", "Bangalore", "560083", "Karnataka", "India");
-		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "13235812527821","13235812527821", "13235812527821", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
+		customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "13235812527855","13235812527855", "13235812527855", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "Battery Issue");
 		List<Problems> problemsList=new ArrayList<Problems>();
 		problemsList.add(problems);
 		createJobPayload = new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer, customerAddress, customerProduct, problemsList);
-		
+		jobService=new JobService();
 	}
 	
 	
@@ -63,12 +65,7 @@ public class CreateJobAPIWithDBValidationTest {
 	public void createJobAPITest()  {
 		//Creating the CreateJobPayload object
 	
-		Response response=given()
-		.spec(requestSpecWithAuth(Role.FD, createJobPayload))
-		.body(createJobPayload)
-		.log().all()
-		.when()
-		.post("/job/create")
+		Response response=jobService.createJob(Role.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))

@@ -27,19 +27,21 @@ import com.api.request.model.Customer;
 import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
 import com.api.request.model.Problems;
+import com.api.services.JobService;
 
 public class CreateJobAPITest {
 	CreateJobPayload createJobPayload;
-	@BeforeMethod(description = "Creating createjob api request payload")
+	private JobService jobService;
+	@BeforeMethod(description = "Creating createjob api request payload and instantiating the job service")
 	public void setup() {
 		Customer customer=new Customer("Srinvas","K","9811122334","","test@gmail.com","");
 		CustomerAddress customerAddress = new CustomerAddress("010", "Apt111", "Homadevanahalli", "Near Podar", "Bangalore", "560083", "Karnataka", "India");
-		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "13235812527892","13235812527892", "13235812527892", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "13235812527895","13235812527895", "13235812527895", getTimeWithDaysAgo(10), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "Battery Issue");
 		List<Problems> problemsList=new ArrayList<Problems>();
 		problemsList.add(problems);
 		createJobPayload = new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer, customerAddress, customerProduct, problemsList);
-		
+		jobService=new JobService();
 	}
 	
 	
@@ -47,12 +49,7 @@ public class CreateJobAPITest {
 	public void createJobAPITest() {
 		//Creating the CreateJobPayload object
 	
-		given()
-		.spec(requestSpecWithAuth(Role.FD, createJobPayload))
-		.body(createJobPayload)
-		.log().all()
-		.when()
-		.post("/job/create")
+		jobService.createJob(Role.FD, createJobPayload)
 		.then()
 		.spec(responseSpec_OK())
 		.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
