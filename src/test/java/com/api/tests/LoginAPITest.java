@@ -12,8 +12,6 @@ import org.testng.annotations.Test;
 import com.api.request.model.UserCredentials;
 import com.api.services.AuthService;
 
-import io.restassured.response.Response;
-
 public class LoginAPITest {
 	private UserCredentials userCredentials;
 	private AuthService authService;

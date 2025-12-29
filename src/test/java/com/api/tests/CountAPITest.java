@@ -1,7 +1,8 @@
 package com.api.tests;
 
 import static com.api.constant.Role.FD;
-import static io.restassured.RestAssured.given;
+import static com.api.utils.SpecUtil.responseSpec_OK;
+import static com.api.utils.SpecUtil.responseSpec_TEXT;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.blankOrNullString;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -15,9 +16,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.api.services.DashboardService;
-import com.api.services.UserService;
-
-import static com.api.utils.SpecUtil.*;
 
 public class CountAPITest {
 	
