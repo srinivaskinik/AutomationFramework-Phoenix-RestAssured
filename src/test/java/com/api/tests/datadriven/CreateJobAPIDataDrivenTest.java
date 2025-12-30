@@ -1,8 +1,6 @@
 package com.api.tests.datadriven;
 
-import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static com.api.utils.SpecUtil.responseSpec_OK;
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
@@ -12,8 +10,6 @@ import org.testng.annotations.Test;
 
 import com.api.constant.Role;
 import com.api.request.model.CreateJobPayload;
-import com.api.request.model.UserCredentials;
-import com.api.services.AuthService;
 import com.api.services.JobService;
 
 public class CreateJobAPIDataDrivenTest {

@@ -20,7 +20,7 @@ public class CreateJobBeanMapper {
 		
 	}
 	public static CreateJobPayload mapper(CreateJobBean bean) {
-		LOGGER.info("Converting the create job bean {} to create job payload", bean);
+		LOGGER.info("Converting the create  job bean {} to create job payload", bean);
 		int mstServiceLocationId=Integer.parseInt(bean.getMst_service_location_id());
 		int mstPlatformId=Integer.parseInt(bean.getMst_platform_id());
 		int oemId=Integer.parseInt(bean.getMst_oem_id());

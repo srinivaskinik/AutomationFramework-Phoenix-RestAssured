@@ -7,10 +7,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.database.DatabaseManager;
 import com.dataproviders.api.bean.CreateJobBean;
 
 public class CreateJobPayloadDataDao {
+	private static final Logger LOGGER = LogManager.getLogger(CreateJobPayloadDataDao.class);
 	private static final String SQL_QUERY = """
 			SELECT
 			mst_oem_id,
@@ -66,8 +70,10 @@ public class CreateJobPayloadDataDao {
 		List<CreateJobBean> beanList=new ArrayList<CreateJobBean>();
 		CreateJobBean bean = new CreateJobBean();
 		try {
+			LOGGER.info("Getting the connection from the Database Manager");
 			conn = DatabaseManager.getConnection();
 			statement = conn.createStatement();
+			LOGGER.info("Executing the SQL Query {}",SQL_QUERY);
 			resultSet = statement.executeQuery(SQL_QUERY);
 			
 			while(resultSet.next()) {
@@ -103,6 +109,7 @@ public class CreateJobPayloadDataDao {
 			
 			}
 		} catch (SQLException e) {
+			LOGGER.error("Cannot convert the result set to the bean",e);
 			e.printStackTrace();
 		}
 		
