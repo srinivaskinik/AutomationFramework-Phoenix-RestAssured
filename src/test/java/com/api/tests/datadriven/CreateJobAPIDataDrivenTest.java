@@ -1,21 +1,18 @@
 package com.api.tests.datadriven;
 
-import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static com.api.utils.SpecUtil.responseSpec_OK;
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.api.constant.Role;
 import com.api.request.model.CreateJobPayload;
-import com.api.request.model.UserCredentials;
-import com.api.services.AuthService;
 import com.api.services.JobService;
-
+@Listeners(com.listeners.APITestListener.class)
 public class CreateJobAPIDataDrivenTest {
 	private JobService jobService;
 	

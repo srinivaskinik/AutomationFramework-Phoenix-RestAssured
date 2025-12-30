@@ -15,6 +15,10 @@ public class UserBean {
 	public UserBean() {
 		
 	}
+	public UserBean(String username, String password) {
+		this.username=username;
+		this.password=password;
+	}
 	@Override
 	public String toString() {
 		return "UserBean [username=" + username + ", password=" + password + "]";
