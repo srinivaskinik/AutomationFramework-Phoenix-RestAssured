@@ -6,6 +6,7 @@ import static io.restassured.RestAssured.given;
 import java.io.IOException;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static com.api.constant.Role.*;
@@ -14,7 +15,7 @@ import com.api.services.UserService;
 import static com.api.utils.SpecUtil.*;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
-
+@Listeners(com.listeners.APITestListener.class)
 public class UserDetailsAPITest {
 	private UserService userService;
 	@BeforeMethod(description = "Setting up the UserService instance")
