@@ -22,9 +22,7 @@ public class SpecUtil {
 		.setBaseUri(getProperty("BASE_URI"))
 		.setContentType(ContentType.JSON)
 		.setAccept(ContentType.JSON)
-		.log(LogDetail.URI)
-		.log(LogDetail.HEADERS)
-		.log(LogDetail.METHOD)
+		.addFilter(new SensitiveDataFilter())
 		.build();
 		return request;
 	}
@@ -37,9 +35,6 @@ public class SpecUtil {
 		.setAccept(ContentType.JSON)
 		.setBody(userCreds)
 		.addFilter(new SensitiveDataFilter())
-		.log(LogDetail.URI)
-		.log(LogDetail.HEADERS)
-		.log(LogDetail.METHOD)
 		.build();
 		return requestSpecification;
 	}
@@ -50,9 +45,7 @@ public class SpecUtil {
 			.setContentType(ContentType.JSON)
 			.setAccept(ContentType.JSON)
 			.addHeader("Authorization", AuthTokenProvider.getToken(role))
-			.log(LogDetail.URI)
-			.log(LogDetail.HEADERS)
-			.log(LogDetail.METHOD)
+			.addFilter(new SensitiveDataFilter())
 			.build();
 			return requestSpecification;
 	}
@@ -64,9 +57,7 @@ public class SpecUtil {
 			.setAccept(ContentType.JSON)
 			.addHeader("Authorization", AuthTokenProvider.getToken(role))
 			.setBody(payload)
-			.log(LogDetail.URI)
-			.log(LogDetail.HEADERS)
-			.log(LogDetail.METHOD)
+			.addFilter(new SensitiveDataFilter())
 			.build();
 			return requestSpecification;
 	}
