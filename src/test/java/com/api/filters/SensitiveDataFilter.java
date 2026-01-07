@@ -33,8 +33,7 @@ public class SensitiveDataFilter implements Filter {
 		redactResponseBody(response);
 		return response;
 	}
-	// Create a method which is going to REDACT /Hide the password from the Request
-	// payload
+	
 
 	private void redactHeader(FilterableRequestSpecification requestSpec) {
 		List<Header> headerList = requestSpec.getHeaders().asList();
@@ -56,7 +55,6 @@ public class SensitiveDataFilter implements Filter {
 
 	public void redactPayload(FilterableRequestSpecification requestSpec) {
 		if (requestSpec.getBody() != null) {
-			// Only for POST PUT and DEL payload ---> BODY
 			String requestPayload = requestSpec.getBody().toString();
 			requestPayload = requestPayload.replaceAll("\"password\"\s*:\s*\"[^\"]+\"", "\"password\": \"[REDACTED]\"");
 			LOGGER.info("REQUEST PAYLOAD: {}", requestPayload);
