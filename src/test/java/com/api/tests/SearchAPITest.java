@@ -11,7 +11,16 @@ import com.api.request.model.Search;
 import com.api.services.DashboardService;
 import com.api.services.JobService;
 import com.api.utils.SpecUtil;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 @Listeners(com.listeners.APITestListener.class)
+@Epic("Job Management")
+@Feature("Job Search")
 public class SearchAPITest {
 	private JobService jobService;
 	private static final String JOB_NUMBER="JOB_128654";
@@ -23,6 +32,9 @@ public class SearchAPITest {
 		searchPayload = new Search(JOB_NUMBER);
 	}
 	
+	@Story("FD should be able to search the job")
+	@Description("Verify if the search API is working properly")
+	@Severity(SeverityLevel.MINOR)
 	@Test(description = "Verify if the search API is working properly", groups= {"api","smoke","regression"})
 	public void searchAPITest() {
 		jobService.search(Role.FD, searchPayload)
