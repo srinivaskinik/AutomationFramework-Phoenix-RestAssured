@@ -10,6 +10,8 @@ import com.bettercloud.vault.VaultConfig;
 import com.bettercloud.vault.VaultException;
 import com.bettercloud.vault.response.LogicalResponse;
 
+import io.qameta.allure.Step;
+
 public class VaultDBConfig {
 	private static VaultConfig vaultConfig;
 	private static Vault vault;
@@ -33,6 +35,7 @@ public class VaultDBConfig {
 		
 	}
 	
+	@Step("Retrieving the secret from the vault")
 	public static String getSecret(String key) {
 		LogicalResponse response = null;
 		try {
